@@ -1,0 +1,26 @@
+name: Saham Daily Screener
+
+on:
+  schedule:
+    # Berjalan otomatis setiap Senin-Jumat jam 16:15 WIB (9:15 UTC)
+    - cron: '15 9 * * 1-5'
+  workflow_dispatch: # Memungkinkan Anda menjalankan manual kapan saja
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Screener
+        run: python main.py
